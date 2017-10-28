@@ -16,10 +16,12 @@ module.exports.loop = function () {
         }
     }
 
+    var room = new Room();
+    
     for(var name in Game.rooms) {
         //console.log('Room "'+name+'" has '+Game.rooms[name].energyAvailable+' energy');
     }
-    
+
     var harvesters = _.filter( Game.creeps, function(creep){return creep.memory.role == 'harvester'});
     var builders = _.filter( Game.creeps, function(creep){return creep.memory.role == 'builder'});
     var upgraders = _.filter( Game.creeps, function(creep){return creep.memory.role == 'upgrader'});
