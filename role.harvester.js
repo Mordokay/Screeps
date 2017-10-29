@@ -25,7 +25,7 @@ var roleHarvester = {
       target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: function (structure) {
           return ((structure.structureType == STRUCTURE_EXTENSION ||
-            structure.structureType == STRUCTURE_SPAWN && structure.energy < structure.energyCapacity);
+            structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
           }
         });
 
@@ -52,7 +52,7 @@ var roleHarvester = {
             }
           });
 
-          if (containers[0]) {
+          if (containers) {
             if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
               creep.moveTo(containers[0]);
             }
@@ -60,7 +60,7 @@ var roleHarvester = {
           else {
             //Builds stuff if there is no place to put energy harvested
 
-            var constructionSite = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+            var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
             if (constructionSite) {
               if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
