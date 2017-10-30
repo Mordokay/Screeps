@@ -28,21 +28,26 @@ module.exports.loop = function () {
         var creep = Game.creeps[name];
         switch (creep.memory.role) {
             case "harvester":
+                creep.say('harvester!');
                 roleHarvester.run(creep);
                 break;
             case "upgrader":
+                creep.say('upgrader!');
                 roleUpgrader.run(creep);
                 break;
             case "builder":
+                creep.say('builder!');
                 roleBuilder.run(creep);
                 break;
             case "repairer":
+                creep.say('repairer!');
                 roleRepairer.run(creep);
                 break;
             case "ranged":
                 roleRanged.run(creep);
                 break;
             case "warrior":
+                //creep.say('warrior!');
                 roleWarrior.run(creep);
                 break;
             case "claimer":

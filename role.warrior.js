@@ -5,28 +5,33 @@ var roleWarrior = {
 
     var enemy = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 
-    if(enemy) {
+    if(creep.roomName != "W49N59"){
+      creep.moveTo(new RoomPosition(25,25, "W49N59"));
+    }
+    else if(enemy) {
       if(creep.attack(enemy) == ERR_NOT_IN_RANGE) {
         creep.moveTo(enemy);
       }
     }
     //No enemies? .. just attack the controller
     else{
-      var controller = creep.room.find(STRUCTURE_CONTROLLER);
-      if(controller.owner != Game.owner) {
+        if(creep.room.controller && !creep.room.controller.my) {
+            if(creep.attackController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.controller);
+            }
+        }
+/*
+        console.log("Check controller!!!");
+      var controller = creep.pos.findClosestByRange(STRUCTURE_CONTROLLER);
+      if(controller && controller.owner != Game.owner) {
         if (creep.attackController(controller) == ERR_NOT_IN_RANGE) {
           creep.moveTo(controller);
         }
-      }
-      else {
-        var closestStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-          filter: function(structure){return (structure.owner != creep.owner)}
-        });
-
-        if(closestStructure && creep.attack(closestStructure) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(closestStructure);
+        else{
+            creep.say("atacking controller!!!");
         }
       }
+      */
     }
   }
 };

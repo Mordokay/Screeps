@@ -15,15 +15,23 @@ var spawnManager = {
           '   Ranged: ' + ranged.length + '   Claimers: ' + claimer.length +
            '   Claimers: ' + claimer.length);
       */
-
-      if(harvesters.length < 4) {
-          Game.spawns.Spawn1.createCreep([CARRY, CARRY, CARRY, WORK, WORK, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'harvester', harvesting : false});
+     if(repairers.length < 1) {
+          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'repairer', repairing : false});
       }
-      else if(builders.length < 2) {
-          Game.spawns.Spawn1.createCreep([CARRY, CARRY, CARRY, WORK, WORK, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
+     else  if(harvesters.length < 2) {
+          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'harvester', harvesting : false});
       }
-      else if(upgraders.length < 2) {
-          Game.spawns.Spawn1.createCreep([CARRY, CARRY, CARRY, WORK, WORK, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
+      else if(builders.length < 3) {
+          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
+      }
+      else if(upgraders.length < 6) {
+          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
+      }
+      else if(warrior.length < 1) {
+          Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE], undefined, {role: 'warrior'});
+      }
+      else if(claimer.length < 1) {
+          Game.spawns.Spawn1.createCreep([CLAIM, MOVE], undefined, {role: 'claimer'});
       }
       //else if(warrior.length < 1) {
       //    Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, MOVE, MOVE], undefined, {role: 'warrior'});
