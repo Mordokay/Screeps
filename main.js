@@ -7,13 +7,14 @@ var roleWarrior = require('role.warrior');
 var roleClaimer = require('role.claimer');
 var roleTower = require('role.tower');
 var spawnManager = require('spawnManager');
+var roleHealer = require('role.healer');
 
 module.exports.loop = function () {
 
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
-            //console.log('Clearing non-existing creep memory:', name);
+            console.log('Clearing non-existing creep memory:',  name);
         }
     }
 
@@ -47,14 +48,19 @@ module.exports.loop = function () {
                 roleRanged.run(creep);
                 break;
             case "warrior":
-                //creep.say('warrior!');
+                creep.say('warrior!');
                 roleWarrior.run(creep);
                 break;
             case "claimer":
+                creep.say('claimer!');
                 roleClaimer.run(creep);
                 break;
+            case "healer":
+                creep.say('healer!');
+                roleHealer.run(creep);
+                break;
             default:
-                console.log('Weird creep role!!!');
+                console.log('Weird creep role: ' + creep.memory.role);
         }
     }
 }

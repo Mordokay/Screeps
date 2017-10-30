@@ -8,48 +8,32 @@ var spawnManager = {
       var ranged = _.filter( Game.creeps, function(creep){return creep.memory.role == 'ranged'});
       var warrior = _.filter( Game.creeps, function(creep){return creep.memory.role == 'warrior'});
       var claimer = _.filter( Game.creeps, function(creep){return creep.memory.role == 'claimer'});
+      var healer = _.filter( Game.creeps, function(creep){return creep.memory.role == 'healer'});
 
-      /*
-          console.log('Harvesters: ' + harvesters.length + '   Builders: ' + builders.length +
-          '   Upgraders: ' + upgraders.length + '   Warriors: ' + warrior.length + '   Repairers: ' + repairers.length +
-          '   Ranged: ' + ranged.length + '   Claimers: ' + claimer.length +
-           '   Claimers: ' + claimer.length);
-      */
-     if(repairers.length < 1) {
-          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'repairer', repairing : false});
+     if(harvesters.length < 2) {
+          //console.log(creep.room.lookAt(20,16)[0].terrain);
+          //TODO: get all sources int he room and check aroundsource for free positions. Assign each new harvester to a free position.
+          //When harvester dies the position is free and a new creep gets assigned to that position. Note: A creep can only harvest from his position
+          Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'harvester', harvesting : false});
       }
-     else  if(harvesters.length < 2) {
-          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'harvester', harvesting : false});
-      }
-      else if(builders.length < 3) {
-          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
+      else if(builders.length < 0) {
+          Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
       }
       else if(upgraders.length < 6) {
-          Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
+          Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
+      }
+      else if(repairers.length < 0) {
+         Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'repairer', repairing : false});
+      }
+      else if(healer.length < 0) {
+        Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, TOUGH , TOUGH, TOUGH], undefined, {role: 'healer'});
       }
       else if(warrior.length < 1) {
-          Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE], undefined, {role: 'warrior'});
+        Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, TOUGH], undefined, {role: 'warrior'});
       }
-      else if(claimer.length < 1) {
-          Game.spawns.Spawn1.createCreep([CLAIM, MOVE], undefined, {role: 'claimer'});
+      else if(claimer.length < 0) {
+        Game.spawns.Spawn1.createCreep([CLAIM, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH,], undefined, {role: 'claimer'});
       }
-      //else if(warrior.length < 1) {
-      //    Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, MOVE, MOVE], undefined, {role: 'warrior'});
-      //}
-      /*
-      else if(repairers.length < 2) {
-          Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'repairer', repairing : false});
-      }
-      else if(ranged.length < 0) {
-          Game.spawns.Spawn1.createCreep([RANGED_ATTACK, MOVE, MOVE], undefined, {role: 'ranged'});
-      }
-      else if(warrior.length < 0) {
-          Game.spawns.Spawn1.createCreep([RANGED_ATTACK, MOVE, MOVE], undefined, {role: 'warrior'});
-      }
-      else if(claimer.length < 2) {
-          Game.spawns.Spawn1.createCreep([CLAIM, MOVE], undefined, {role: 'claimer'});
-      }
-      */
     }
 };
 

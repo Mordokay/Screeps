@@ -473,11 +473,11 @@ Creep.prototype =
      * @return {number|OK|ERR_NOT_OWNER|ERR_BUSY}
      */
     say: function(message, public) { },
-    
+
     /**
-     * Sign a controller with an arbitrary text visible to all players. 
-     * This text will appear in the room UI, in the world map, and can be accessed via the API. 
-     * You can sign unowned and hostile controllers. The target has to be at adjacent square to the creep. 
+     * Sign a controller with an arbitrary text visible to all players.
+     * This text will appear in the room UI, in the world map, and can be accessed via the API.
+     * You can sign unowned and hostile controllers. The target has to be at adjacent square to the creep.
      * Pass an empty string to remove the sign.
      *
      * @see {@link http://docs.screeps.com/api/#Creep.signController}
