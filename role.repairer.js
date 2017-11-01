@@ -60,7 +60,7 @@ var roleRepairer = {
                     filter: function(container){return container.structureType == STRUCTURE_CONTAINER && container.store[RESOURCE_ENERGY] > (container.storeCapacity / 4)}
                 });
 
-                if (containers[0]) {
+                if (containers) {
                     if(creep.harvest(containers[0]) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(containers[0]);
                     }

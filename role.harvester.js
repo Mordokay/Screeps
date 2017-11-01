@@ -10,15 +10,18 @@ var roleHarvester = {
     }
 
     if(creep.memory.harvesting) {
-      var source = creep.pos.findClosestByRange(FIND_SOURCES, {
-        filter: function(source){return source.energy > 0;}
-      });
-
-      if(source && creep.harvest(source) == ERR_NOT_IN_RANGE){
-        creep.moveTo(source);
+      //console.log(creep.name + " is harvesting at (" + creep.memory.posX + " , " + creep.memory.posY + " ) on source: " + creep.memory.sourceID);
+      //var source = creep.pos.findClosestByPath(FIND_SOURCES, {
+      //  filter: function(source){return source.energy > 0;}
+      //});
+      if(creep.pos.x ==  creep.memory.posX && creep.pos.y ==  creep.memory.posY){
+        creep.harvest(Game.getObjectById(creep.memory.sourceID));
+      }
+      else{
+        creep.moveTo(creep.memory.posX, creep.memory.posY)
       }
     }
-    //First creep is gonna check for spawns and extensions to fill, then check for towers and finally drop energy on containers.
+    //First creep is gonna fill structures swith enery by this order: extensions/spawns -> containers
     //If there is no place to put the energy, the creep becomes usefull by helping to build structures.
     else {
       target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -28,37 +31,23 @@ var roleHarvester = {
           }
         });
 
-      if (target) {
-        if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(target);
-        }
-      }
-      else {
-        var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-          filter: function (structure) {
-            return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
-          }
-        });
         if (target) {
           if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
           }
         }
         else {
-          var containers = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+          var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: function (container) {
-              return container.structureType == STRUCTURE_CONTAINER && container.store[RESOURCE_ENERGY] < container.storeCapacity
+              return (container.structureType == STRUCTURE_CONTAINER && container.store[RESOURCE_ENERGY] < container.storeCapacity);
             }
           });
-
-          if (containers) {
-            if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-              creep.moveTo(containers[0]);
+          if (container) {
+            if (creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              creep.moveTo(container);
             }
           }
           else {
-            //Builds stuff if there is no place to put energy harvested
-
             var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
             if (constructionSite) {
@@ -70,7 +59,6 @@ var roleHarvester = {
         }
       }
     }
-  }
-};
+  };
 
 module.exports = roleHarvester;
