@@ -18,8 +18,8 @@ module.exports.loop = function () {
       if(Memory.creeps[name]["role"] == "harvester"){
         for(var pos in Memory.harvestPositions) {
           if(Memory.harvestPositions[pos][0] == Memory.creeps[name]["posX"] && Memory.harvestPositions[pos][1] == Memory.creeps[name]["posY"]){
-            console.log("Clearing" + name + " and released slot at pos: ( " + Memory.creeps[name]["posX"] + " , " + Memory.creeps[name]["posY"] + " )");
             Memory.harvestPositions[pos][3] = false;
+            console.log("Clearing " + name + " and released slot at pos: ( " + Memory.creeps[name]["posX"] + " , " + Memory.creeps[name]["posY"] + " )");
           }
         }
       }

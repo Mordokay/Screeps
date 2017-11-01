@@ -13,7 +13,7 @@ var spawnManager = {
 
 
     Memory.harvestPositions["Pos1"][3] = true;
-    if(harvesters.length < 4) {
+    if(harvesters.length < 5) {
 
 
       var myPosX, myPosY, mySourceID;
@@ -40,7 +40,7 @@ var spawnManager = {
     else if(builders.length < 0 ) {
       Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
     }
-    else if(upgraders.length < 2) {
+    else if(upgraders.length < 1) {
       Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
     }
     else if(repairers.length < 0) {
