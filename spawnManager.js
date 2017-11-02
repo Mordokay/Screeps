@@ -11,52 +11,59 @@ var spawnManager = {
     var healer = _.filter( Game.creeps, function(creep){return creep.memory.role == 'healer'});
     var towerManager = _.filter( Game.creeps, function(creep){return creep.memory.role == 'towerManager'});
 
+    if(harvesters.length < 4) {
+      if(!Game.spawns.Spawn1.spawning){
+        var isOneOfThemFalse = false;
+        var theNameOfThePositionThatIsFalse;
 
-    Memory.harvestPositions["Pos1"][3] = true;
-    if(harvesters.length < 5) {
-
-
-      var myPosX, myPosY, mySourceID;
-      var found = false;
-      for(var pos in Memory.harvestPositions) {
-        if(found){
-          break;
+        for(var pos in Memory.harvestPositions) {
+          if(Memory.harvestPositions[pos][3] == false){
+            isOneOfThemFalse = true;
+            theNameOfThePositionThatIsFalse = pos;
+          }
         }
-        if(Memory.harvestPositions[pos][3] == false){
-            myPosX = Memory.harvestPositions[pos][0];
-            myPosY = Memory.harvestPositions[pos][1];
-            mySourceID = posX = Memory.harvestPositions[pos][2];
-            Memory.harvestPositions[pos][3] = true;
-            found = true;
+//[WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
+        if(isOneOfThemFalse){
+          var myPosX = Memory.harvestPositions[theNameOfThePositionThatIsFalse][0];
+          var myPosY = Memory.harvestPositions[theNameOfThePositionThatIsFalse][1];
+          var mySourceID = Memory.harvestPositions[theNameOfThePositionThatIsFalse][2];
+          //console.log("theNameOfThePositionThatIsFalse: " + theNameOfThePositionThatIsFalse);
+          var myArray = [WORK, WORK, WORK,  WORK, WORK, WORK,
+            CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+            MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+          if(typeof(Game.spawns.Spawn1.createCreep(myArray, undefined, {role: 'harvester', harvesting : false, posX: myPosX, posY: myPosY, sourceID: mySourceID})) == 'string'){
+              Memory.harvestPositions[theNameOfThePositionThatIsFalse][3] = true;
+          }
         }
       }
-
-
-      //console.log(creep.room.lookAt(20,16)[0].terrain);
-      //TODO: get all sources in the room and check around source for free positions. Assign each new harvester to a free position.
-      //When harvester dies the position is free and a new creep gets assigned to that position. Note: A creep can only harvest from his position
-      Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'harvester', harvesting : false, posX: myPosX, posY: myPosY, sourceID: mySourceID});
     }
     else if(builders.length < 0 ) {
-      Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
+      Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'builder', building : false});
     }
-    else if(upgraders.length < 1) {
-      Game.spawns.Spawn1.createCreep([WORK, WORK, WORK,  WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'upgrader', upgrading : false});
+    else if(upgraders.length < 3) {
+      var myArray = [WORK, WORK, WORK,  WORK, WORK, WORK,
+        CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+        MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+      Game.spawns.Spawn1.createCreep(myArray, undefined, {role: 'upgrader', upgrading : false});
     }
     else if(repairers.length < 0) {
       Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'repairer', repairing : false});
     }
     else if(healer.length < 0) {
-      Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, TOUGH , TOUGH, TOUGH], undefined, {role: 'healer'});
+      Game.spawns.Spawn1.createCreep([HEAL, MOVE, HEAL, MOVE, HEAL, MOVE, HEAL, MOVE, HEAL, MOVE, HEAL, MOVE], undefined, {role: 'healer'});
     }
     else if(warrior.length < 0) {
-      Game.spawns.Spawn1.createCreep([MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK], undefined, {role: 'warrior'});
+      var myArray = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
+        MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,
+        ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK ];
+      Game.spawns.Spawn1.createCreep(myArray, undefined, {role: 'warrior'});
     }
     else if(claimer.length < 0) {
       Game.spawns.Spawn1.createCreep([CLAIM, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH,], undefined, {role: 'claimer'});
     }
     else if(towerManager.length < 1) {
-      Game.spawns.Spawn1.createCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE,  MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {role: 'towerManager', harvesting : false});
+      var arrayAux = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+      Game.spawns.Spawn1.createCreep(arrayAux, undefined, {role: 'towerManager', harvesting : false});
     }
   }
 };

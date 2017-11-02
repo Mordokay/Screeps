@@ -17,7 +17,7 @@ var roleUpgrader = {
     }
     else {
       var containerWithEnergy = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-          filter: (i) => i.structureType == STRUCTURE_CONTAINER &&
+          filter: (i) => (i.structureType == STRUCTURE_CONTAINER || i.structureType == STRUCTURE_STORAGE) &&
                          i.store[RESOURCE_ENERGY] > 0
       });
       if (containerWithEnergy) {

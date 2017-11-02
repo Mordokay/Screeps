@@ -2,9 +2,10 @@ var roleWarrior = {
 
   /** @param {Creep} creep **/
   run: function(creep) {
-    var roomToAtack = "W48N57";
+    var roomToAtack = "W47N58";
     var tower = creep.pos.findClosestByRange(STRUCTURE_TOWER);
     var enemy = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+
 
     if(creep.room.name != roomToAtack){
       creep.moveTo(new RoomPosition(25,25, roomToAtack));
